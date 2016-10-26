@@ -11,7 +11,7 @@ cd $CMSSW_BASE
 eval `scramv1 runtime -sh`
 
 cd $CMSSW_BASE/..
-#tar  --exclude-caches-all -czf ${SCRIPTDIR}/${CMSSW_VERSION}.tar.gz ${CMSSW_VERSION}/
+tar  --exclude-caches-all -czf ${SCRIPTDIR}/${CMSSW_VERSION}.tar.gz ${CMSSW_VERSION}/
 cd $MAINDIR
 
 runScript=$SCRIPTDIR/runEfficiency.sh
@@ -47,7 +47,7 @@ do
     echo $sample
     isSignal=false
     isMC=false
-    jsonFile="Cert_271036-279588_13TeV_PromptReco_Collisions16_JSON_NoL1T.txt"
+    jsonFile="Cert_271036-282037_13TeV_PromptReco_Collisions16_JSON_NoL1T.txt"
     mode=0
 
     OUTDIR=/store/group/lpchbb/mwalker/AnalysisTrees/${sample}/
