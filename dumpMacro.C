@@ -1,8 +1,9 @@
 #include "helperDisplacedDijets.C"
 #include "helperDisplacedDijetTriggers.C"
 
-void dumpMacro(const char* ifname="root://cmseos.fnal.gov//store/group/lpchbb/mwalker/2016/DisplacedDijet/SingleMuon/Run2016G-PromptReco-v1_AOD/160913_214527/0000/results_999.root"
-	       //"root://cmseos.fnal.gov//store/group/lpchbb/mwalker/2016/DisplacedDijet/SingleElectron/Run2016G-PromptReco-v1_AOD/160913_214512/0000/results_999.root"
+void dumpMacro(const char* ifname=
+	       //"root://cmseos.fnal.gov//store/group/lpchbb/mwalker/2016/DisplacedDijet/SingleMuon/Run2016G-PromptReco-v1_AOD/161019_214744/0000/results_999.root"
+	       "root://cmseos.fnal.gov//store/group/lpchbb/mwalker/2016/DisplacedDijet/SingleElectron/Run2016G-PromptReco-v1_AOD/161019_214728/0000/results_999.root"
 		  , const char* ofname="exampleAnalyzed.root"
 		  , bool isSignal = false
 		  , int mode = 0
@@ -38,7 +39,7 @@ void dumpMacro(const char* ifname="root://cmseos.fnal.gov//store/group/lpchbb/mw
   setupTriggers(handler);
   //setupListMaxVariablesAndHistograms(handler);
   if(isMC)setupMC(handler);
-  else handler->readGoodRunLumiFromJSON(TString(json));
+  //else handler->readGoodRunLumiFromJSON(TString(json));
 
   ////////////////////////
   //Add some signatures//
