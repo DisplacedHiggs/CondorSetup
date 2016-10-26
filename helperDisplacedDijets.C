@@ -378,6 +378,11 @@ void setupMuons(AdvancedHandler* handler)
   handler->addObjectVariable("MUON_SEGCOM0p303",new ObjectVariableInRange<double>("segmentCompatibility",0.303,1000000));
   handler->addObjectVariable("MUON_SEGCOM0p451",new ObjectVariableInRange<double>("segmentCompatibility",0.451,1000000));
 
+  handler->addObjectVariable("MUON_totalIsoDB0p4", new ObjectVariableDeltaBetaCorrectedTotalIso("pfIsolationR04sumChargedHadronPt","pfIsolationR04sumNeutralHadronEt","pfIsolationR04sumPhotonEt","pfIsolationR04sumPUPt","MUON_TOTALISODB0p4","isMuon"),false);
+  handler->addObjectVariable("MUON_RELISO", new ObjectVariableRelIso("MUON_RELISO","MUON_TOTALISODB0p4"));
+  handler->addObjectVariable("MUON_IREL0p5",new ObjectVariableInRange<double>("MUON_RELISO",0,0.5,"MUON_IREL0p5"));
+  handler->addObjectVariable("MUON_IREL0p25",new ObjectVariableInRange<double>("MUON_RELISO",0,0.25,"MUON_IREL0p25"));
+
   ObjectVariableCombined* muon_goodGlobalSeg = new ObjectVariableCombined("MUON_GOODGLOBAL","MUON_SEGCOM0p303",true);
   handler->addObjectVariable("MUON_GOODGLOBALSEGCOM",muon_goodGlobalSeg);
   handler->addObjectVariable("MUON_GOODSEGCOM",new ObjectVariableCombined("MUON_GOODGLOBALSEGCOM","MUON_SEGCOM0p451",false));
@@ -390,22 +395,23 @@ void setupMuons(AdvancedHandler* handler)
 
   handler->addProductCut("basicMuons","ETA2p4");
   handler->addProductCut("basicMuons","isPFMuon");
-  handler->addProductCut("basicMuons","MUON_GLOBALORTRACKER");
-  handler->addProductCut("basicMuons","MUON_dz");
+  //handler->addProductCut("basicMuons","MUON_GLOBALORTRACKER");
+  //handler->addProductCut("basicMuons","MUON_dz");
   //handler->addProductCut("goodMuonsLowPt","SIP3D_4sigma");
-  handler->addProductCut("basicMuons","MUON_VALIDMUONHITS");
-  handler->addProductCut("basicMuons","MUON_MATCHEDSTATIONS");
-  handler->addProductCut("basicMuons","MUON_PIXELHITS");
-  handler->addProductCut("basicMuons","MUON_LAYERS");
-  handler->addProductCut("basicMuons","MUON_normalizedChi2");
+  //handler->addProductCut("basicMuons","MUON_VALIDMUONHITS");
+  //handler->addProductCut("basicMuons","MUON_MATCHEDSTATIONS");
+  //handler->addProductCut("basicMuons","MUON_PIXELHITS");
+  //handler->addProductCut("basicMuons","MUON_LAYERS");
+  //handler->addProductCut("basicMuons","MUON_normalizedChi2");
 
   handler->addProduct("looseMuons","basicMuons");
-  handler->addProductCut("looseMuons","MUON_dxy");
-  handler->addProductCut("looseMuons","IREL0p5");
-  handler->addProductCut("looseMuons","IREL0p5");
+  //handler->addProductCut("looseMuons","MUON_dxy");
+  handler->addProductCut("looseMuons","isLooseMuon");
+  handler->addProductCut("looseMuons","MUON_IREL0p5");
 
   handler->addProduct("goodMuonsLowPt","looseMuons");
-  handler->addProductCut("goodMuonsLowPt","IREL0p23");
+  handler->addProductCut("goodMuonsLowPt","isMediumMuon");
+  handler->addProductCut("goodMuonsLowPt","MUON_IREL0p25");
   //handler->addProductCut("goodMuons","IREL0p15");
 
   handler->addProduct("goodMuons","goodMuonsLowPt");
@@ -544,6 +550,8 @@ void setupElectrons(AdvancedHandler* handler)
   //handler->addProductCut("basicElectrons", "ELECTRON_dz");
   handler->addProductCut("basicElectrons", "ELECTRON_passConversionVeto");
   handler->addProductCut("basicElectrons", "ELECTRON_MISSINGHITS");
+  //handler->addProductCut("basicElectrons","ELECTRON_CUT_VETOIDNOISO");
+  handler->addProductCut("basicElectrons","ELECTRON_IDISOemu");
   
   // loose electrons according to RA7Coordination2015 TWiki
   handler->addProduct("looseElectrons","basicElectrons");
@@ -735,7 +743,11 @@ void setupJets(AdvancedHandler* handler)
   handler->addObjectVariable("CALOJET_BAD_HFRACTION", new ObjectVariableReversed("CALOJET_HFRACTION"));
   handler->addObjectVariable("CALOJET_NMATCHED1",new ObjectVariableInRange<int>("nMatchedTracks",1,10000,"nMatchedTracks1"));
   handler->addObjectVariable("CALOJET_MEDIANIPLOG10", new ObjectVariableInRange<double>("medianIPLog10Sig",0.868,100000));
+  handler->addObjectVariable("CALOJET_MEDIANIPLOG10_0p5", new ObjectVariableInRange<double>("medianIPLog10Sig",0.5,100000));
+  handler->addObjectVariable("CALOJET_MEDIANIPLOG10_0p0", new ObjectVariableInRange<double>("medianIPLog10Sig",0.0,100000));
   handler->addObjectVariable("CALOJET_ALPHAMAX0p1", new ObjectVariableInRange<double>("alphaMax",0,0.1));
+  handler->addObjectVariable("CALOJET_ALPHAMAX0p25", new ObjectVariableInRange<double>("alphaMax",0,0.25));
+  handler->addObjectVariable("CALOJET_ALPHAMAX0p5", new ObjectVariableInRange<double>("alphaMax",0,0.5));
   handler->addObjectVariable("CALOJET_GOODMEDIANLOGTRACKANGLE", new ObjectVariableInRange<double>("medianLog10TrackAngle",-1.8,10000));
   handler->addObjectVariable("CALOJET_BETA0p9", new ObjectVariableInRange<double>("beta",0.9,10000));
   handler->addObjectVariable("CALOJET_ALPHAMAXPRIME0p1", new ObjectVariableInRange<double>("alphaMaxPrime",0,0.1));
@@ -780,6 +792,9 @@ void setupJets(AdvancedHandler* handler)
   handler->addProduct("BASICCALOJETS1","BASICCALOJETS");
   handler->addProductCut("BASICCALOJETS1","CALOJET_NMATCHED1");
 
+  handler->addProduct("BASICCALOJETS1PT20","BASICCALOJETS1");
+  handler->addProductCut("BASICCALOJETS1PT20","PT20");
+
   //handler->addProduct("BASICCALOJETS1A","BASICCALOJETS1");
   //handler->addProductCut("BASICCALOJETS1A","CALOJET_ALPHAMAX0p1");
 
@@ -813,6 +828,15 @@ void setupJets(AdvancedHandler* handler)
   handler->addProduct("INCLUSIVETAGGEDCALOJETSD","INCLUSIVETAGGEDCALOJETSC");
   handler->addProductCut("INCLUSIVETAGGEDCALOJETSD","CALOJET_AVFVERTEXDISTANCETOBEAM0p1");
 
+  handler->addProduct("INCLUSIVETAGGEDCALOJETSE","BASICCALOJETS1PT20");
+  handler->addProductCut("INCLUSIVETAGGEDCALOJETSE","CALOJET_ALPHAMAX0p25");
+  handler->addProductCut("INCLUSIVETAGGEDCALOJETSE","CALOJET_MEDIANIPLOG10_0p5");
+
+  handler->addProduct("INCLUSIVETAGGEDCALOJETSF","BASICCALOJETS1PT20");
+  handler->addProductCut("INCLUSIVETAGGEDCALOJETSF","CALOJET_ALPHAMAX0p5");
+  handler->addProductCut("INCLUSIVETAGGEDCALOJETSF","CALOJET_MEDIANIPLOG10_0p0");
+
+
   handler->addProduct("INCLUSIVETAGGEDCALOJETS","BASICCALOJETS1");
   handler->addProductCut("INCLUSIVETAGGEDCALOJETS","CALOJET_MEDIANIPLOG10");
   handler->addProductCut("INCLUSIVETAGGEDCALOJETS","CALOJET_ALPHAMAX0p1");
@@ -822,19 +846,19 @@ void setupJets(AdvancedHandler* handler)
   //handler->addProductCut("INCLUSIVETAGGEDCALOJETS1","CALOJET_TOTALTRACKANGLE");
   //handler->addProductCut("INCLUSIVETAGGEDCALOJETS1","CALOJET_SUMIPSIG");
 
-  handler->addProduct("INCLUSIVETAGGEDCALOJETS2","BASICCALOJETS1");
-  handler->addProductCut("INCLUSIVETAGGEDCALOJETS2","CALOJET_GOODMEDIANLOGTRACKANGLE");
-  handler->addProductCut("INCLUSIVETAGGEDCALOJETS2","CALOJET_BETA0p9");
+  //handler->addProduct("INCLUSIVETAGGEDCALOJETS2","BASICCALOJETS1");
+  //handler->addProductCut("INCLUSIVETAGGEDCALOJETS2","CALOJET_GOODMEDIANLOGTRACKANGLE");
+  //handler->addProductCut("INCLUSIVETAGGEDCALOJETS2","CALOJET_BETA0p9");
 
 
-  //handler->addProduct("INCLUSIVETAGGEDCALOJETS20","INCLUSIVETAGGEDCALOJETS");
-  //handler->addProductCut("INCLUSIVETAGGEDCALOJETS20","PT20");
+  handler->addProduct("INCLUSIVETAGGEDCALOJETS20","INCLUSIVETAGGEDCALOJETS");
+  handler->addProductCut("INCLUSIVETAGGEDCALOJETS20","PT20");
 
   //handler->addProduct("INCLUSIVETAGGEDCALOJETS40","INCLUSIVETAGGEDCALOJETS");
   //handler->addProductCut("INCLUSIVETAGGEDCALOJETS40","PT40");
 
-  //handler->addProduct("INCLUSIVETAGGEDCALOJETS60","INCLUSIVETAGGEDCALOJETS");
-  //handler->addProductCut("INCLUSIVETAGGEDCALOJETS60","PT60");
+  handler->addProduct("INCLUSIVETAGGEDCALOJETS60","INCLUSIVETAGGEDCALOJETS");
+  handler->addProductCut("INCLUSIVETAGGEDCALOJETS60","PT60");
 
 }
 
@@ -846,6 +870,7 @@ void setupCaloJetMatching(AdvancedHandler* handler, bool isSignal)
   productsToMatch.push_back("ALLCALOJETS");
   productsToMatch.push_back("BASICCALOJETS");
   productsToMatch.push_back("BASICCALOJETS1");
+  productsToMatch.push_back("BASICCALOJETS1PT20");
   //productsToMatch.push_back("BASICCALOJETS1A");
   //productsToMatch.push_back("BASICCALOJETS1B");
   //productsToMatch.push_back("BASICCALOJETS1C");
@@ -854,14 +879,16 @@ void setupCaloJetMatching(AdvancedHandler* handler, bool isSignal)
   //productsToMatch.push_back("BASICCALOJETS1F");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETS");
   //productsToMatch.push_back("INCLUSIVETAGGEDCALOJETS1");
-  productsToMatch.push_back("INCLUSIVETAGGEDCALOJETS2");
+  //productsToMatch.push_back("INCLUSIVETAGGEDCALOJETS2");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSA");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSB");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSC");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSD");
-  //productsToMatch.push_back("INCLUSIVETAGGEDCALOJETS20");
+  productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSE");
+  productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSF");
+  productsToMatch.push_back("INCLUSIVETAGGEDCALOJETS20");
   //productsToMatch.push_back("INCLUSIVETAGGEDCALOJETS40");
-  //productsToMatch.push_back("INCLUSIVETAGGEDCALOJETS60");
+  productsToMatch.push_back("INCLUSIVETAGGEDCALOJETS60");
 
   ObjectAssociationDeltaR* metMatch = new ObjectAssociationDeltaR(100,"metMatch");
   ObjectVariableAssociateDeltaR* metDeltaR = new ObjectVariableAssociateDeltaR("metMatch","METDELTAR");
@@ -874,6 +901,11 @@ void setupCaloJetMatching(AdvancedHandler* handler, bool isSignal)
 
   ObjectAssociationDeltaR* basiccalojets1Match = new ObjectAssociationDeltaR(100,"BASICCALOJETS1Match");
   ObjectVariableAssociateDeltaR* basiccalojets1DeltaR = new ObjectVariableAssociateDeltaR("BASICCALOJETS1Match","BASICCALOJETS1DELTAR");
+  ObjectVariableAssociateAngles* basiccalojets1Angles = new ObjectVariableAssociateAngles("BASICCALOJETS1Match","BASICCALOJETS1");
+
+  ObjectAssociationDeltaR* basiccalojets1PT20Match = new ObjectAssociationDeltaR(100,"BASICCALOJETS1PT20Match");
+  ObjectVariableAssociateDeltaR* basiccalojets1PT20DeltaR = new ObjectVariableAssociateDeltaR("BASICCALOJETS1PT20Match","BASICCALOJETS1PT20DELTAR");
+  ObjectVariableAssociateAngles* basiccalojets1PT20Angles = new ObjectVariableAssociateAngles("BASICCALOJETS1PT20Match","BASICCALOJETS1PT20");
 
 
 
@@ -892,6 +924,12 @@ void setupCaloJetMatching(AdvancedHandler* handler, bool isSignal)
     if(product != "ALLCALOJETS" && product != "BASICCALOJETS"){
       handler->addProductAssociation(product,"BASICCALOJETS1",basiccalojets1Match,true);
       handler->addAssociateVariable(product,"BASICCALOJETS1DELTAR",basiccalojets1DeltaR);
+      handler->addAssociateVariable(product,"BASICCALOJETS1ANGLES",basiccalojets1Angles);
+      if(product != "BASICCALOJETS1"){
+      handler->addProductAssociation(product,"BASICCALOJETS1PT20",basiccalojets1PT20Match,true);
+      handler->addAssociateVariable(product,"BASICCALOJETS1PT20DELTAR",basiccalojets1PT20DeltaR);
+      handler->addAssociateVariable(product,"BASICCALOJETS1PT20ANGLES",basiccalojets1PT20Angles);
+      }
     }
 
     TString selfMatch_str = "SELFMATCH"; selfMatch_str+=product;
@@ -1133,6 +1171,7 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
   starterProducts.push_back("ALLCALOJETS");
   starterProducts.push_back("BASICCALOJETS");
   starterProducts.push_back("BASICCALOJETS1");
+  starterProducts.push_back("BASICCALOJETS1PT20");
   //starterProducts.push_back("BASICCALOJETS1A");
   //starterProducts.push_back("BASICCALOJETS1B");
   //starterProducts.push_back("BASICCALOJETS1C");
@@ -1141,14 +1180,16 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
   //starterProducts.push_back("BASICCALOJETS1F");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETS");
   //starterProducts.push_back("INCLUSIVETAGGEDCALOJETS1");
-  starterProducts.push_back("INCLUSIVETAGGEDCALOJETS2");
+  //starterProducts.push_back("INCLUSIVETAGGEDCALOJETS2");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETSA");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETSB");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETSC");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETSD");
-  //starterProducts.push_back("INCLUSIVETAGGEDCALOJETS20");
+  starterProducts.push_back("INCLUSIVETAGGEDCALOJETSE");
+  starterProducts.push_back("INCLUSIVETAGGEDCALOJETSF");
+  starterProducts.push_back("INCLUSIVETAGGEDCALOJETS20");
   //starterProducts.push_back("INCLUSIVETAGGEDCALOJETS40");
-  //starterProducts.push_back("INCLUSIVETAGGEDCALOJETS60");
+  starterProducts.push_back("INCLUSIVETAGGEDCALOJETS60");
 
   for(auto &product : starterProducts) {
     productlist.push_back(product);
