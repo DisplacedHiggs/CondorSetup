@@ -18,3 +18,23 @@ Configuration setup containing trigger specific settings
 
 #dumpMacro.C
 This macro prints a lot of debugging information. As it's set it up, it's highly recommended to run over a single event (there are some examples inside about how to run over specific events by event number or event index in the file).
+
+#How to Run
+Follow instructions in https://github.com/DisplacedHiggs/CrabSetup to setup CMSSW area and environment, including cmsenv and voms-proxy-init.
+
+```
+cd $CMSSW_BASE/../
+git clone git@github.com:DisplacedHiggs/CondorSetup.git
+mkdir logs
+```
+
+Edit isSignal, isMC, jsonFile, OUTDIR, dir1, dir2, dir3, indir and notify_user as needed.  Create processes.list file listing all sample names (e.g. ZH_HToSSTobbbb_ZToLL_MH-125_MS-55_ctauS-10_TuneCUETP8M1_13TeV-powheg-pythia8), one per line.  
+
+```
+./createEfficiency.sh 
+```
+
+Then submit each condor task.  This is how you submit one:
+```
+condor submit submitEfficiency_ZH_HToSSTobbbb_ZToLL_MH-125_MS-55_ctauS-10_TuneCUETP8M1_13TeV-powheg-pythia8_161018_172618_0000.condor 
+```
