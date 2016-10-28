@@ -612,6 +612,20 @@ void setupMCProducts(AdvancedHandler* handler)
   quarkPDGID->addValue(-5);
   handler->addObjectVariable("QUARK",quarkPDGID);
 
+  ObjectVariableValueInList<int>* quarkortauPDGID = new ObjectVariableValueInList<int>("pdgId",1);
+  quarkortauPDGID->addValue(-1);
+  quarkortauPDGID->addValue(2);
+  quarkortauPDGID->addValue(-2);
+  quarkortauPDGID->addValue(3);
+  quarkortauPDGID->addValue(-3);
+  quarkortauPDGID->addValue(-4);
+  quarkortauPDGID->addValue(4);
+  quarkortauPDGID->addValue(5);
+  quarkortauPDGID->addValue(-5);
+  quarkortauPDGID->addValue(15);
+  quarkortauPDGID->addValue(-15);
+  handler->addObjectVariable("QUARKORTAU",quarkortauPDGID);
+
  
 
   ObjectVariableValueInList<int>* gluinoPDGID = new ObjectVariableValueInList<int>("pdgId",1000021);
@@ -623,13 +637,16 @@ void setupMCProducts(AdvancedHandler* handler)
   ObjectVariableValueInList<int>* gravitinoPDGID = new ObjectVariableValueInList<int>("pdgId",1000039);
   handler->addObjectVariable("GRAVITINOPDGID",gravitinoPDGID);
 
-  ObjectVariableValue<int>* scalarPDGID = new ObjectVariableValue<int>("pdgId",9000006);
+  ObjectVariableValueInList<int>* scalarPDGID = new ObjectVariableValueInList<int>("pdgId",9000006);
+  scalarPDGID->addValue(-9000006);
   handler->addObjectVariable("SCALARPDGID",scalarPDGID);
 
   ObjectVariableValueInList<int>* motherGluino = new ObjectVariableValueInList<int>("motherpdgId",1000021);
   handler->addObjectVariable("MOTHERGLUINO",motherGluino);
 
-  handler->addObjectVariable("MOTHERSCALAR", new ObjectVariableValue<int>("motherpdgId",9000006));
+  ObjectVariableValueInList<int>* motherScalar = new ObjectVariableValueInList<int>("motherpdgId",9000006);
+  motherScalar->addValue(-9000006);
+  handler->addObjectVariable("MOTHERSCALAR", motherScalar);
 
   ObjectVariableValue<int>* status3 = new ObjectVariableValue<int>("status",3);
   handler->addObjectVariable("STATUS3",status3);
@@ -683,7 +700,7 @@ void setupMCProducts(AdvancedHandler* handler)
 
   handler->addProduct("SIGNALQUARKS","ALLMC");
   handler->addProductCut("SIGNALQUARKS","MOTHERSCALAR");
-  handler->addProductCut("SIGNALQUARKS","QUARK");
+  handler->addProductCut("SIGNALQUARKS","QUARKORTAU");
 
   handler->addObjectVariable("VtxX",new ObjectVariableRename<double>("vx"));
   handler->addObjectVariable("VtxY",new ObjectVariableRename<double>("vy"));
