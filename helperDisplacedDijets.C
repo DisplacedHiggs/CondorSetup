@@ -1235,8 +1235,10 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
   variables.push_back("avfVertexChi2NDoF");
   variables.push_back("avfVertexDistanceToBeam");
   variables.push_back("avfVertexTransverseSig");
-  variables.push_back("hitsInFrontOfVertPerTrack"); handler->setDefaultObjectVariable("hitsInFrontOfVertPerTrack",0.0,true);
-  variables.push_back("missHitsAfterVertPerTrack"); handler->setDefaultObjectVariable("missHitsAfterVertPerTrack",0.0,true);
+  variables.push_back("hitsInFrontOfVertPerTrack");
+  handler->setDefaultObjectVariable("hitsInFrontOfVertPerTrack",0.0,true);
+  variables.push_back("missHitsAfterVertPerTrack");
+  handler->setDefaultObjectVariable("missHitsAfterVertPerTrack",0.0,true);
   variables.push_back("avfDistToPV");
   variables.push_back("avfBeamSpotDeltaPhi");
   variables.push_back("avfBeamSpotRecoilPt");
@@ -1256,6 +1258,11 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
   variables.push_back("LEPANGLE_dPHI");
   variables.push_back("LEPANGLE_dANGLE");
   variables.push_back("BASICCALOJETS1DELTAR");
+  variables.push_back("BASICCALOJETS1ANGLE_dPHI");
+  variables.push_back("BASICCALOJETS1ANGLE_dANGLE");
+  variables.push_back("BASICCALOJETS1PT20DELTAR");
+  variables.push_back("BASICCALOJETS1PT20ANGLE_dPHI");
+  variables.push_back("BASICCALOJETS1PT20ANGLE_dANGLE");
   variables.push_back("trackEnergy");
   variables.push_back("trackMass");
   variables.push_back("stupakPt");
@@ -1264,7 +1271,8 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
   variables.push_back("totalTrackPt");
   variables.push_back("totalTrackAnglePt");
   variables.push_back("linearRadialMoment");
-  variables.push_back("associatedTrackPt"); handler->setDefaultObjectVariable("associatedTrackPt",0.0,true);
+  variables.push_back("associatedTrackPt");
+  handler->setDefaultObjectVariable("associatedTrackPt",0.0,true);
   variables.push_back("assocAplanarity");
   variables.push_back("assocSphericity");
   variables.push_back("assocThrustMajor");
