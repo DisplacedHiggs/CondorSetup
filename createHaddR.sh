@@ -42,7 +42,7 @@ echo 'tail=$4' >> $runScript
 echo 'base=$5' >> $runScript
 echo 'INDIR=$6' >> $runScript
 echo 'xrdfs root://cmseos.fnal.gov ls -u $OUTDIR | grep "\.root" | grep histo | head -${head} | tail -${tail}' >> $runScript
-echo 'haddR -f  allHistos_${sample}_${base}.root `xrdfs root://cmseos.fnal.gov ls -u $INDIR | grep "\.root" | grep histo | head -${head} | tail -${tail}`' >> $runScript
+echo 'haddR -f -c "(hasGoodVertex && (hasSingleElTriggers || hasSingleMuTriggers) && (NGOODMUONS[0] + NGOODELECTRONS[0]) > 0)" allHistos_${sample}_${base}.root `xrdfs root://cmseos.fnal.gov ls -u $INDIR | grep "\.root" | grep histo | head -${head} | tail -${tail}`' >> $runScript
 echo 'xrdcp -f allHistos_${sample}_${base}.root root://cmseos.fnal.gov/$OUTDIR/allHistos_${sample}_${base}.root' >> $runScript
 echo 'rm -rf allHistos_${sample}_${base}.root' >> $runScript
 echo "" >> $runScript
