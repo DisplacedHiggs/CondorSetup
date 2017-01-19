@@ -37,5 +37,5 @@ Edit isSignal, isMC, jsonFile, OUTDIR, dir1, dir2, dir3, indir and notify_user a
 
 Then submit each condor task.  This is how you submit one:
 ```
-condor submit submitEfficiency_ZH_HToSSTobbbb_ZToLL_MH-125_MS-55_ctauS-10_TuneCUETP8M1_13TeV-powheg-pythia8_161018_172618_0000.condor 
+condor_submit submitEfficiency_ZH_HToSSTobbbb_ZToLL_MH-125_MS-55_ctauS-10_TuneCUETP8M1_13TeV-powheg-pythia8_161018_172618_0000.condor 
 ```
