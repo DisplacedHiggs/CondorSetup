@@ -91,7 +91,7 @@ do
 	    echo "Should_Transfer_Files = YES" >> $condorFile
 	    echo "request_disk = 10000000" >> $condorFile
 	    echo "request_memory = 2100" >> $condorFile
-	    echo "WhenTOTransferOutput  = ON_EXIT_OR_EVICT" >> $condorFile
+	    echo "WhenToTransferOutput  = ON_EXIT_OR_EVICT" >> $condorFile
 	    echo "Notification=never" >> $condorFile
 	    echo "notify_user = mwalker@physics.rutgers.edu" >> $condorFile
 	    echo 'x509userproxy = $ENV(X509_USER_PROXY)' >> $condorFile
