@@ -250,6 +250,9 @@ void setupClasses(AdvancedHandler* handler)
   handler->addProduct("ALLFILTERS","ALL");
   handler->addProductCut("ALLFILTERS","isFilter");
 
+  handler->addProduct("ALLPHOTONS","ALL");
+  handler->addProductCut("ALLPHOTONS","isPhoton");
+
   handler->addProduct("ALLMUONS","ALL");
   handler->addProductCut("ALLMUONS","isMuon");
 
@@ -258,9 +261,6 @@ void setupClasses(AdvancedHandler* handler)
 
   handler->addProduct("ALLTAUS","ALL");
   handler->addProductCut("ALLTAUS","isTau");
-
-  handler->addProduct("ALLPHOTONS","ALL");
-  handler->addProductCut("ALLPHOTONS","isPhoton");
 
   handler->addProduct("ALLTRACKS","ALL");
   handler->addProductCut("ALLTRACKS","isTrack");
@@ -354,6 +354,27 @@ void setupGenericObjectVariables(AdvancedHandler* handler)
   handler->addObjectVariable("IREL0p35",new ObjectVariableInRange<double>("RELISO",0,0.3529,"IREL0p35"));
   handler->addObjectVariable("IREL0p5",new ObjectVariableInRange<double>("RELISO",0,0.5,"IREL0p5"));
 
+}
+
+void setupPhotons(AdvancedHandler* handler)
+{
+
+  //Very roughly based on https://twiki.cern.ch/twiki/bin/view/CMS/CutBasedPhotonIdentificationRun2
+  handler->addObjectVariable("PHOTON_HoverE_0p0396", new ObjectVariableInRange<double>("hadronicOverEm",0,0.0396));
+  handler->addObjectVariable("PHOTON_sigmaIetaIeta_0p01022", new ObjectVariableInRange<double>("sigmaIetaIeta",0,0.01022));
+  handler->addObjectVariable("PHOTON_chargedHadronIso_0p441", new ObjectVariableInRange<double>("chargedHadronIso",0,0.441));
+  handler->addObjectVariable("PHOTON_neutralHadronIso_3", new ObjectVariableInRange<double>("neutralHadronIso",0,3.0));
+  handler->addObjectVariable("PHOTON_photonIso_3", new ObjectVariableInRange<double>("photonIso",0,3.0));
+
+  handler->addProduct("PHOTONSPT10","ALLPHOTONS");
+  handler->addProductCut("PHOTONSPT10","PT10");
+
+  handler->addProduct("MEDIUMPHOTONS","PHOTONSPT10");
+  handler->addProductCut("MEDIUMPHOTONS","PHOTON_HoverE_0p0396");
+  handler->addProductCut("MEDIUMPHOTONS","PHOTON_sigmaIetaIeta_0p01022");
+  handler->addProductCut("MEDIUMPHOTONS","PHOTON_chargedHadronIso_0p441");
+  handler->addProductCut("MEDIUMPHOTONS","PHOTON_neutralHadronIso_3");
+  handler->addProductCut("MEDIUMPHOTONS","PHOTON_photonIso_3");
 }
 
 void setupMuons(AdvancedHandler* handler)
@@ -767,12 +788,15 @@ void setupJets(AdvancedHandler* handler)
   handler->addObjectVariable("CALOJET_BAD_HFRACTION", new ObjectVariableReversed("CALOJET_HFRACTION"));
   handler->addObjectVariable("CALOJET_NMATCHED1",new ObjectVariableInRange<int>("nMatchedTracks",1,10000,"nMatchedTracks1"));
   handler->addObjectVariable("CALOJET_MEDIANIPLOG10", new ObjectVariableInRange<double>("medianIPLog10Sig",0.868,100000));
+  handler->addObjectVariable("CALOJET_MEDIANIPLOG10_1p5", new ObjectVariableInRange<double>("medianIPLog10Sig",1.5,100000));
   handler->addObjectVariable("CALOJET_MEDIANIPLOG10_0p5", new ObjectVariableInRange<double>("medianIPLog10Sig",0.5,100000));
   handler->addObjectVariable("CALOJET_MEDIANIPLOG10_0p0", new ObjectVariableInRange<double>("medianIPLog10Sig",0.0,100000));
   handler->addObjectVariable("CALOJET_ALPHAMAX0p1", new ObjectVariableInRange<double>("alphaMax",0,0.1));
   handler->addObjectVariable("CALOJET_ALPHAMAX0p25", new ObjectVariableInRange<double>("alphaMax",0,0.25));
   handler->addObjectVariable("CALOJET_ALPHAMAX0p5", new ObjectVariableInRange<double>("alphaMax",0,0.5));
+  handler->addObjectVariable("CALOJET_ALPHAMAX0p05", new ObjectVariableInRange<double>("alphaMax",0,0.05));
   handler->addObjectVariable("CALOJET_GOODMEDIANLOGTRACKANGLE", new ObjectVariableInRange<double>("medianLog10TrackAngle",-1.8,10000));
+  handler->addObjectVariable("CALOJET_GOODMEDIANLOGTRACKANGLE_m1p6", new ObjectVariableInRange<double>("medianLog10TrackAngle",-1.6,10000));
   handler->addObjectVariable("CALOJET_BETA0p9", new ObjectVariableInRange<double>("beta",0.9,10000));
   handler->addObjectVariable("CALOJET_ALPHAMAXPRIME0p1", new ObjectVariableInRange<double>("alphaMaxPrime",0,0.1));
   handler->addObjectVariable("CALOJET_AVFVERTEXDISTANCETOBEAM0p1", new ObjectVariableInRange<double>("avfVertexDistanceToBeam",0.1,100000));
@@ -818,6 +842,9 @@ void setupJets(AdvancedHandler* handler)
 
   handler->addProduct("BASICCALOJETS1PT20","BASICCALOJETS1");
   handler->addProductCut("BASICCALOJETS1PT20","PT20");
+
+  handler->addProduct("BASICCALOJETS1PT20NOPHOTONS", "BASICCALOJETS1PT20");
+  handler->addProductComparison("BASICCALOJETS1PT20NOPHOTONS","MEDIUMPHOTONS", new ObjectComparisonDeltaR(0.4));
 
   //handler->addProduct("BASICCALOJETS1A","BASICCALOJETS1");
   //handler->addProductCut("BASICCALOJETS1A","CALOJET_ALPHAMAX0p1");
@@ -866,6 +893,11 @@ void setupJets(AdvancedHandler* handler)
   handler->addProductCut("INCLUSIVETAGGEDCALOJETS","CALOJET_ALPHAMAX0p1");
   handler->addProductCut("INCLUSIVETAGGEDCALOJETS","CALOJET_GOODMEDIANLOGTRACKANGLE");
 
+  handler->addProduct("INCLUSIVETAGGEDCALOJETSG","BASICCALOJETS1PT20");
+  handler->addProductCut("INCLUSIVETAGGEDCALOJETSG","CALOJET_ALPHAMAX0p05");
+  handler->addProductCut("INCLUSIVETAGGEDCALOJETSG","CALOJET_MEDIANIPLOG10_1p5");
+  handler->addProductCut("INCLUSIVETAGGEDCALOJETSG","CALOJET_GOODMEDIANLOGTRACKANGLE_m1p6");
+
   //handler->addProduct("INCLUSIVETAGGEDCALOJETS1","INCLUSIVETAGGEDCALOJETS");
   //handler->addProductCut("INCLUSIVETAGGEDCALOJETS1","CALOJET_TOTALTRACKANGLE");
   //handler->addProductCut("INCLUSIVETAGGEDCALOJETS1","CALOJET_SUMIPSIG");
@@ -895,6 +927,7 @@ void setupCaloJetMatching(AdvancedHandler* handler, bool isSignal)
   productsToMatch.push_back("BASICCALOJETS");
   productsToMatch.push_back("BASICCALOJETS1");
   productsToMatch.push_back("BASICCALOJETS1PT20");
+  productsToMatch.push_back("BASICCALOJETS1PT20NOPHOTONS");
   //productsToMatch.push_back("BASICCALOJETS1A");
   //productsToMatch.push_back("BASICCALOJETS1B");
   //productsToMatch.push_back("BASICCALOJETS1C");
@@ -910,6 +943,7 @@ void setupCaloJetMatching(AdvancedHandler* handler, bool isSignal)
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSD");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSE");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSF");
+  productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSG");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETS20");
   //productsToMatch.push_back("INCLUSIVETAGGEDCALOJETS40");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETS60");
@@ -1050,6 +1084,8 @@ void setupProducts(AdvancedHandler* handler, bool isSignal)
   goodLeptons->addSource("goodElectrons");
   handler->addProduct("goodLeptons",goodLeptons);
 
+  setupPhotons(handler);
+
   ////////
   ///MC///
   ////////
@@ -1117,6 +1153,11 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
     */
   }
   
+  vector<TString> photonVariables;
+  photonVariables.push_back("PT");
+  photonVariables.push_back("ETA");
+  photonVariables.push_back("PHI");
+
   vector<TString> variables;
   variables.push_back("PT");
   variables.push_back("ETA");
@@ -1192,10 +1233,19 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
   variablesInt.clear();
   starterProducts.clear();
 
+  vector<TString> photonStarterProducts;
+  photonStarterProducts.push_back("ALLPHOTONS"); 
+  photonStarterProducts.push_back("PHOTONSPT10");
+  photonStarterProducts.push_back("MEDIUMPHOTONS");
+
+  //starterProducts.push_back("ALLPHOTONS"); 
+  //starterProducts.push_back("PHOTONSPT10");
+  //starterProducts.push_back("MEDIUMPHOTONS");
   starterProducts.push_back("ALLCALOJETS");
   starterProducts.push_back("BASICCALOJETS");
   starterProducts.push_back("BASICCALOJETS1");
   starterProducts.push_back("BASICCALOJETS1PT20");
+  starterProducts.push_back("BASICCALOJETS1PT20NOPHOTONS");
   //starterProducts.push_back("BASICCALOJETS1A");
   //starterProducts.push_back("BASICCALOJETS1B");
   //starterProducts.push_back("BASICCALOJETS1C");
@@ -1211,13 +1261,14 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETSD");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETSE");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETSF");
+  starterProducts.push_back("INCLUSIVETAGGEDCALOJETSG");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETS20");
   //starterProducts.push_back("INCLUSIVETAGGEDCALOJETS40");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETS60");
 
   for(auto &product : starterProducts) {
     productlist.push_back(product);
-    if(product!= "ALLDIJETS")productlist.push_back(product+"MATCHED");
+    if(product!="ALLDIJETS" && product!="ALLPHOTONS" && product!="PHOTONSPT10" && product!="MEDIUMPHOTONS")productlist.push_back(product+"MATCHED");
   }
 
   variables.push_back("sumIP");
@@ -1327,6 +1378,24 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
       TString hname = TString::Format("%s_%s",variable.Data(),product.Data());
       hname.ToUpper();
       handler->addEventVariable(hname, new EventVariableObjectVariableVector<int>(variable,product));
+    }
+
+    TString selfDeltaR_str = "SELFDELTAR"; selfDeltaR_str+=product;
+    TString hname = TString::Format("SELFDELTAR_%s",product.Data()); hname.ToUpper();
+    handler->addEventVariable(hname, new EventVariableObjectVariableVector<double>(selfDeltaR_str,product));
+    
+  }
+
+  //Photons
+  for(auto product : photonStarterProducts){
+    TString nname = TString::Format("N%s",product.Data());
+    nname.ToUpper();
+    handler->addEventVariable(nname, new EventVariableN(nname,product));
+
+    for(auto variable : photonVariables){
+      TString hname = TString::Format("%s_%s",variable.Data(),product.Data());
+      hname.ToUpper();
+      handler->addEventVariable(hname, new EventVariableObjectVariableVector<double>(variable,product));
     }
 
     TString selfDeltaR_str = "SELFDELTAR"; selfDeltaR_str+=product;
