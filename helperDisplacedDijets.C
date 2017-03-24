@@ -359,22 +359,52 @@ void setupGenericObjectVariables(AdvancedHandler* handler)
 void setupPhotons(AdvancedHandler* handler)
 {
 
+  handler->addObjectVariable("PHOTON_INGAPPOS",new ObjectVariableInRange<double>("superClustereta",1.4442,1.566));
+  handler->addObjectVariable("PHOTON_INGAPNEG",new ObjectVariableInRange<double>("superClustereta",-1.566,-1.4442));
+  ObjectVariableCombined* electron_ingap = new ObjectVariableCombined("PHOTON_INGAPPOS","PHOTON_INGAPNEG",false,"PHOTON_INGAP");
+  handler->addObjectVariable("PHOTON_INGAP",electron_ingap);
+  handler->addObjectVariable("PHOTON_NOTGAP",new ObjectVariableReversed("PHOTON_INGAP","PHOTON_NOTGAP"));
+
   //Very roughly based on https://twiki.cern.ch/twiki/bin/view/CMS/CutBasedPhotonIdentificationRun2
   handler->addObjectVariable("PHOTON_HoverE_0p0396", new ObjectVariableInRange<double>("hadronicOverEm",0,0.0396));
+  handler->addObjectVariable("PHOTON_HoverE_0p0219", new ObjectVariableInRange<double>("hadronicOverEm",0,0.0219));
   handler->addObjectVariable("PHOTON_sigmaIetaIeta_0p01022", new ObjectVariableInRange<double>("sigmaIetaIeta",0,0.01022));
+  handler->addObjectVariable("PHOTON_sigmaIetaIeta_0p03013", new ObjectVariableInRange<double>("sigmaIetaIeta",0,0.03013));
   handler->addObjectVariable("PHOTON_chargedHadronIso_0p441", new ObjectVariableInRange<double>("chargedHadronIso",0,0.441));
+  handler->addObjectVariable("PHOTON_chargedHadronIso_0p442", new ObjectVariableInRange<double>("chargedHadronIso",0,0.442));
   handler->addObjectVariable("PHOTON_neutralHadronIso_3", new ObjectVariableInRange<double>("neutralHadronIso",0,3.0));
   handler->addObjectVariable("PHOTON_photonIso_3", new ObjectVariableInRange<double>("photonIso",0,3.0));
+  handler->addObjectVariable("PHOTON_passElectronVeto",new ObjectVariableValue<bool>("passElectronVeto",true));
+  handler->addObjectVariable("PHOTON_noPixelSeed",new ObjectVariableValue<bool>("hasPixelSeed",false));
+
+
+  ObjectVariableCombined* photon_barrel_medium = new ObjectVariableCombined("BARREL","PHOTON_HoverE_0p0396",true);
+  photon_barrel_medium->addVariable("PHOTON_sigmaIetaIeta_0p01022");
+  photon_barrel_medium->addVariable("PHOTON_chargedHadronIso_0p441");
+  handler->addObjectVariable("PHOTON_BARREL_MEDIUM",photon_barrel_medium);
+
+  ObjectVariableCombined* photon_endcap_medium = new ObjectVariableCombined("ENDCAP","PHOTON_HoverE_0p0219",true);
+  photon_endcap_medium->addVariable("PHOTON_sigmaIetaIeta_0p03013");
+  photon_endcap_medium->addVariable("PHOTON_chargedHadronIso_0p442");
+  handler->addObjectVariable("PHOTON_ENDCAP_MEDIUM",photon_endcap_medium);
+
+  ObjectVariableCombined* photon_medium = new ObjectVariableCombined("PHOTON_ENDCAP_MEDIUM","PHOTON_BARREL_MEDIUM",false);
+  handler->addObjectVariable("PHOTON_MEDIUM",photon_medium);
 
   handler->addProduct("PHOTONSPT10","ALLPHOTONS");
   handler->addProductCut("PHOTONSPT10","PT10");
 
   handler->addProduct("MEDIUMPHOTONS","PHOTONSPT10");
-  handler->addProductCut("MEDIUMPHOTONS","PHOTON_HoverE_0p0396");
-  handler->addProductCut("MEDIUMPHOTONS","PHOTON_sigmaIetaIeta_0p01022");
-  handler->addProductCut("MEDIUMPHOTONS","PHOTON_chargedHadronIso_0p441");
+  //handler->addProductCut("MEDIUMPHOTONS","PHOTON_HoverE_0p0396");
+  //handler->addProductCut("MEDIUMPHOTONS","PHOTON_sigmaIetaIeta_0p03013");
+  //handler->addProductCut("MEDIUMPHOTONS","PHOTON_chargedHadronIso_0p441");
+  handler->addProductCut("MEDIUMPHOTONS","ETA2p5");
+  handler->addProductCut("MEDIUMPHOTONS","PHOTON_MEDIUM");
   handler->addProductCut("MEDIUMPHOTONS","PHOTON_neutralHadronIso_3");
   handler->addProductCut("MEDIUMPHOTONS","PHOTON_photonIso_3");
+  //handler->addProductCut("MEDIUMPHOTONS","PHOTON_passElectronVeto");
+  //handler->addProductCut("MEDIUMPHOTONS","PHOTON_noPixelSeed");
+
 }
 
 void setupMuons(AdvancedHandler* handler)
