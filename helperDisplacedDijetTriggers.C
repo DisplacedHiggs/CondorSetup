@@ -201,43 +201,43 @@ void setupTriggers(AdvancedHandler* handler)
   handler->addProductCut("goodtriggers", "ACCEPT");
   handler->addProductCut("goodtriggers", "WASRUN");
 
-  handler->addProduct("singlePhoton165Trigger","goodtriggers");
-  handler->addProductCut("singlePhoton165Trigger","isSinglePhoton165Trigger");
+  handler->addProduct("singlePhoton165Triggers","goodtriggers");
+  handler->addProductCut("singlePhoton165Triggers","isSinglePhoton165Trigger");
   handler->addEventVariable("NSinglePhoton165Triggers", new EventVariableN("NSinglePhoton165Triggers","singlePhoton165Triggers"));
   handler->addEventVariable("hasSinglePhoton165Triggers",new EventVariableInRange<int>("NSinglePhoton165Triggers",1,10000));
 
-  handler->addProduct("singlePhoton120Trigger","goodtriggers");
-  handler->addProductCut("singlePhoton120Trigger","isSinglePhoton120Trigger");
+  handler->addProduct("singlePhoton120Triggers","goodtriggers");
+  handler->addProductCut("singlePhoton120Triggers","isSinglePhoton120Trigger");
   handler->addEventVariable("NSinglePhoton120Triggers", new EventVariableN("NSinglePhoton120Triggers","singlePhoton120Triggers"));
   handler->addEventVariable("hasSinglePhoton120Triggers",new EventVariableInRange<int>("NSinglePhoton120Triggers",1,10000));
 
-  handler->addProduct("singlePhoton90Trigger","goodtriggers");
-  handler->addProductCut("singlePhoton90Trigger","isSinglePhoton90Trigger");
+  handler->addProduct("singlePhoton90Triggers","goodtriggers");
+  handler->addProductCut("singlePhoton90Triggers","isSinglePhoton90Trigger");
   handler->addEventVariable("NSinglePhoton90Triggers", new EventVariableN("NSinglePhoton90Triggers","singlePhoton90Triggers"));
   handler->addEventVariable("hasSinglePhoton90Triggers",new EventVariableInRange<int>("NSinglePhoton90Triggers",1,10000));
 
-  handler->addProduct("singlePhoton75Trigger","goodtriggers");
-  handler->addProductCut("singlePhoton75Trigger","isSinglePhoton75Trigger");
+  handler->addProduct("singlePhoton75Triggers","goodtriggers");
+  handler->addProductCut("singlePhoton75Triggers","isSinglePhoton75Trigger");
   handler->addEventVariable("NSinglePhoton75Triggers", new EventVariableN("NSinglePhoton75Triggers","singlePhoton75Triggers"));
   handler->addEventVariable("hasSinglePhoton75Triggers",new EventVariableInRange<int>("NSinglePhoton75Triggers",1,10000));
 
-  handler->addProduct("singlePhoton50Trigger","goodtriggers");
-  handler->addProductCut("singlePhoton50Trigger","isSinglePhoton50Trigger");
+  handler->addProduct("singlePhoton50Triggers","goodtriggers");
+  handler->addProductCut("singlePhoton50Triggers","isSinglePhoton50Trigger");
   handler->addEventVariable("NSinglePhoton50Triggers", new EventVariableN("NSinglePhoton50Triggers","singlePhoton50Triggers"));
   handler->addEventVariable("hasSinglePhoton50Triggers",new EventVariableInRange<int>("NSinglePhoton50Triggers",1,10000));
 
-  handler->addProduct("singlePhoton36Trigger","goodtriggers");
-  handler->addProductCut("singlePhoton36Trigger","isSinglePhoton36Trigger");
+  handler->addProduct("singlePhoton36Triggers","goodtriggers");
+  handler->addProductCut("singlePhoton36Triggers","isSinglePhoton36Trigger");
   handler->addEventVariable("NSinglePhoton36Triggers", new EventVariableN("NSinglePhoton36Triggers","singlePhoton36Triggers"));
   handler->addEventVariable("hasSinglePhoton36Triggers",new EventVariableInRange<int>("NSinglePhoton36Triggers",1,10000));
 
-  handler->addProduct("singlePhoton30Trigger","goodtriggers");
-  handler->addProductCut("singlePhoton30Trigger","isSinglePhoton30Trigger");
+  handler->addProduct("singlePhoton30Triggers","goodtriggers");
+  handler->addProductCut("singlePhoton30Triggers","isSinglePhoton30Trigger");
   handler->addEventVariable("NSinglePhoton30Triggers", new EventVariableN("NSinglePhoton30Triggers","singlePhoton30Triggers"));
   handler->addEventVariable("hasSinglePhoton30Triggers",new EventVariableInRange<int>("NSinglePhoton30Triggers",1,10000));
 
-  handler->addProduct("singlePhoton22Trigger","goodtriggers");
-  handler->addProductCut("singlePhoton22Trigger","isSinglePhoton22Trigger");
+  handler->addProduct("singlePhoton22Triggers","goodtriggers");
+  handler->addProductCut("singlePhoton22Triggers","isSinglePhoton22Trigger");
   handler->addEventVariable("NSinglePhoton22Triggers", new EventVariableN("NSinglePhoton22Triggers","singlePhoton22Triggers"));
   handler->addEventVariable("hasSinglePhoton22Triggers",new EventVariableInRange<int>("NSinglePhoton22Triggers",1,10000));
 
