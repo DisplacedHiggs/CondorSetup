@@ -913,6 +913,10 @@ void setupJets(AdvancedHandler* handler)
   handler->addProductCut("INCLUSIVETAGGEDCALOJETSE","CALOJET_ALPHAMAX0p25");
   handler->addProductCut("INCLUSIVETAGGEDCALOJETSE","CALOJET_MEDIANIPLOG10_0p5");
 
+  handler->addProduct("INCLUSIVETAGGEDCALOJETSENOPHOTONS","BASICCALOJETS1PT20NOPHOTONS");
+  handler->addProductCut("INCLUSIVETAGGEDCALOJETSENOPHOTONS","CALOJET_ALPHAMAX0p25");
+  handler->addProductCut("INCLUSIVETAGGEDCALOJETSENOPHOTONS","CALOJET_MEDIANIPLOG10_0p5");
+
   handler->addProduct("INCLUSIVETAGGEDCALOJETSF","BASICCALOJETS1PT20");
   handler->addProductCut("INCLUSIVETAGGEDCALOJETSF","CALOJET_ALPHAMAX0p5");
   handler->addProductCut("INCLUSIVETAGGEDCALOJETSF","CALOJET_MEDIANIPLOG10_0p0");
@@ -972,6 +976,7 @@ void setupCaloJetMatching(AdvancedHandler* handler, bool isSignal)
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSC");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSD");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSE");
+  productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSENOPHOTONS");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSF");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETSG");
   productsToMatch.push_back("INCLUSIVETAGGEDCALOJETS20");
@@ -1290,6 +1295,7 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETSC");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETSD");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETSE");
+  starterProducts.push_back("INCLUSIVETAGGEDCALOJETSENOPHOTONS");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETSF");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETSG");
   starterProducts.push_back("INCLUSIVETAGGEDCALOJETS20");

@@ -90,12 +90,156 @@ void setupTriggers(AdvancedHandler* handler)
   isDoubleElTrigger->addValue("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v10");
   handler->addObjectVariable("isDoubleElTrigger",isDoubleElTrigger);
 
+  ObjectVariableValueInList<TString>* isSinglePhoton22Trigger = new ObjectVariableValueInList<TString>("TRIGGERNAME","HLT_Photon22_R9Id90_HE10_IsoM_v1");
+  isSinglePhoton22Trigger->addValue("HLT_Photon22_R9Id90_HE10_IsoM_v2");
+  isSinglePhoton22Trigger->addValue("HLT_Photon22_R9Id90_HE10_IsoM_v3");
+  isSinglePhoton22Trigger->addValue("HLT_Photon22_R9Id90_HE10_IsoM_v4");
+  isSinglePhoton22Trigger->addValue("HLT_Photon22_R9Id90_HE10_IsoM_v5");
+  isSinglePhoton22Trigger->addValue("HLT_Photon22_R9Id90_HE10_IsoM_v6");
+  isSinglePhoton22Trigger->addValue("HLT_Photon22_R9Id90_HE10_IsoM_v7");
+  isSinglePhoton22Trigger->addValue("HLT_Photon22_R9Id90_HE10_IsoM_v8");
+  isSinglePhoton22Trigger->addValue("HLT_Photon22_R9Id90_HE10_IsoM_v9");
+  isSinglePhoton22Trigger->addValue("HLT_Photon22_R9Id90_HE10_IsoM_v10");
+  handler->addObjectVariable("isSinglePhoton22Trigger",isSinglePhoton22Trigger);
+
+  ObjectVariableValueInList<TString>* isSinglePhoton30Trigger = new ObjectVariableValueInList<TString>("TRIGGERNAME","HLT_Photon30_R9Id90_HE10_IsoM_v1");
+  isSinglePhoton30Trigger->addValue("HLT_Photon30_R9Id90_HE10_IsoM_v2");
+  isSinglePhoton30Trigger->addValue("HLT_Photon30_R9Id90_HE10_IsoM_v3");
+  isSinglePhoton30Trigger->addValue("HLT_Photon30_R9Id90_HE10_IsoM_v4");
+  isSinglePhoton30Trigger->addValue("HLT_Photon30_R9Id90_HE10_IsoM_v5");
+  isSinglePhoton30Trigger->addValue("HLT_Photon30_R9Id90_HE10_IsoM_v6");
+  isSinglePhoton30Trigger->addValue("HLT_Photon30_R9Id90_HE10_IsoM_v7");
+  isSinglePhoton30Trigger->addValue("HLT_Photon30_R9Id90_HE10_IsoM_v8");
+  isSinglePhoton30Trigger->addValue("HLT_Photon30_R9Id90_HE10_IsoM_v9");
+  isSinglePhoton30Trigger->addValue("HLT_Photon30_R9Id90_HE10_IsoM_v10");
+  isSinglePhoton30Trigger->addValue("HLT_Photon30_R9Id90_HE10_IsoM_v11");
+  handler->addObjectVariable("isSinglePhoton30Trigger",isSinglePhoton30Trigger);
+
+  ObjectVariableValueInList<TString>* isSinglePhoton36Trigger = new ObjectVariableValueInList<TString>("TRIGGERNAME","HLT_Photon36_R9Id90_HE10_IsoM_v1");
+  isSinglePhoton36Trigger->addValue("HLT_Photon36_R9Id90_HE10_IsoM_v2");
+  isSinglePhoton36Trigger->addValue("HLT_Photon36_R9Id90_HE10_IsoM_v3");
+  isSinglePhoton36Trigger->addValue("HLT_Photon36_R9Id90_HE10_IsoM_v4");
+  isSinglePhoton36Trigger->addValue("HLT_Photon36_R9Id90_HE10_IsoM_v5");
+  isSinglePhoton36Trigger->addValue("HLT_Photon36_R9Id90_HE10_IsoM_v6");
+  isSinglePhoton36Trigger->addValue("HLT_Photon36_R9Id90_HE10_IsoM_v7");
+  isSinglePhoton36Trigger->addValue("HLT_Photon36_R9Id90_HE10_IsoM_v8");
+  isSinglePhoton36Trigger->addValue("HLT_Photon36_R9Id90_HE10_IsoM_v9");
+  isSinglePhoton36Trigger->addValue("HLT_Photon36_R9Id90_HE10_IsoM_v10");
+  isSinglePhoton36Trigger->addValue("HLT_Photon36_R9Id90_HE10_IsoM_v11");
+  handler->addObjectVariable("isSinglePhoton36Trigger",isSinglePhoton36Trigger);
+
+  ObjectVariableValueInList<TString>* isSinglePhoton50Trigger = new ObjectVariableValueInList<TString>("TRIGGERNAME","HLT_Photon50_R9Id90_HE10_IsoM_v1");
+  isSinglePhoton50Trigger->addValue("HLT_Photon50_R9Id90_HE10_IsoM_v2");
+  isSinglePhoton50Trigger->addValue("HLT_Photon50_R9Id90_HE10_IsoM_v3");
+  isSinglePhoton50Trigger->addValue("HLT_Photon50_R9Id90_HE10_IsoM_v4");
+  isSinglePhoton50Trigger->addValue("HLT_Photon50_R9Id90_HE10_IsoM_v5");
+  isSinglePhoton50Trigger->addValue("HLT_Photon50_R9Id90_HE10_IsoM_v6");
+  isSinglePhoton50Trigger->addValue("HLT_Photon50_R9Id90_HE10_IsoM_v7");
+  isSinglePhoton50Trigger->addValue("HLT_Photon50_R9Id90_HE10_IsoM_v8");
+  isSinglePhoton50Trigger->addValue("HLT_Photon50_R9Id90_HE10_IsoM_v9");
+  isSinglePhoton50Trigger->addValue("HLT_Photon50_R9Id90_HE10_IsoM_v10");
+  isSinglePhoton50Trigger->addValue("HLT_Photon50_R9Id90_HE10_IsoM_v11");
+  handler->addObjectVariable("isSinglePhoton50Trigger",isSinglePhoton50Trigger);
+
+  ObjectVariableValueInList<TString>* isSinglePhoton75Trigger = new ObjectVariableValueInList<TString>("TRIGGERNAME","HLT_Photon75_R9Id90_HE10_IsoM_v1");
+  isSinglePhoton75Trigger->addValue("HLT_Photon75_R9Id90_HE10_IsoM_v2");
+  isSinglePhoton75Trigger->addValue("HLT_Photon75_R9Id90_HE10_IsoM_v3");
+  isSinglePhoton75Trigger->addValue("HLT_Photon75_R9Id90_HE10_IsoM_v4");
+  isSinglePhoton75Trigger->addValue("HLT_Photon75_R9Id90_HE10_IsoM_v5");
+  isSinglePhoton75Trigger->addValue("HLT_Photon75_R9Id90_HE10_IsoM_v6");
+  isSinglePhoton75Trigger->addValue("HLT_Photon75_R9Id90_HE10_IsoM_v7");
+  isSinglePhoton75Trigger->addValue("HLT_Photon75_R9Id90_HE10_IsoM_v8");
+  isSinglePhoton75Trigger->addValue("HLT_Photon75_R9Id90_HE10_IsoM_v9");
+  isSinglePhoton75Trigger->addValue("HLT_Photon75_R9Id90_HE10_IsoM_v10");
+  isSinglePhoton75Trigger->addValue("HLT_Photon75_R9Id90_HE10_IsoM_v11");
+  handler->addObjectVariable("isSinglePhoton75Trigger",isSinglePhoton75Trigger);
+
+  ObjectVariableValueInList<TString>* isSinglePhoton90Trigger = new ObjectVariableValueInList<TString>("TRIGGERNAME","HLT_Photon90_R9Id90_HE10_IsoM_v1");
+  isSinglePhoton90Trigger->addValue("HLT_Photon90_R9Id90_HE10_IsoM_v2");
+  isSinglePhoton90Trigger->addValue("HLT_Photon90_R9Id90_HE10_IsoM_v3");
+  isSinglePhoton90Trigger->addValue("HLT_Photon90_R9Id90_HE10_IsoM_v4");
+  isSinglePhoton90Trigger->addValue("HLT_Photon90_R9Id90_HE10_IsoM_v5");
+  isSinglePhoton90Trigger->addValue("HLT_Photon90_R9Id90_HE10_IsoM_v6");
+  isSinglePhoton90Trigger->addValue("HLT_Photon90_R9Id90_HE10_IsoM_v7");
+  isSinglePhoton90Trigger->addValue("HLT_Photon90_R9Id90_HE10_IsoM_v8");
+  isSinglePhoton90Trigger->addValue("HLT_Photon90_R9Id90_HE10_IsoM_v9");
+  isSinglePhoton90Trigger->addValue("HLT_Photon90_R9Id90_HE10_IsoM_v10");
+  isSinglePhoton90Trigger->addValue("HLT_Photon90_R9Id90_HE10_IsoM_v11");
+  handler->addObjectVariable("isSinglePhoton90Trigger",isSinglePhoton90Trigger);
+
+  ObjectVariableValueInList<TString>* isSinglePhoton120Trigger = new ObjectVariableValueInList<TString>("TRIGGERNAME","HLT_Photon120_R9Id90_HE10_IsoM_v1");
+  isSinglePhoton120Trigger->addValue("HLT_Photon120_R9Id90_HE10_IsoM_v2");
+  isSinglePhoton120Trigger->addValue("HLT_Photon120_R9Id90_HE10_IsoM_v3");
+  isSinglePhoton120Trigger->addValue("HLT_Photon120_R9Id90_HE10_IsoM_v4");
+  isSinglePhoton120Trigger->addValue("HLT_Photon120_R9Id90_HE10_IsoM_v5");
+  isSinglePhoton120Trigger->addValue("HLT_Photon120_R9Id90_HE10_IsoM_v6");
+  isSinglePhoton120Trigger->addValue("HLT_Photon120_R9Id90_HE10_IsoM_v7");
+  isSinglePhoton120Trigger->addValue("HLT_Photon120_R9Id90_HE10_IsoM_v8");
+  isSinglePhoton120Trigger->addValue("HLT_Photon120_R9Id90_HE10_IsoM_v9");
+  isSinglePhoton120Trigger->addValue("HLT_Photon120_R9Id90_HE10_IsoM_v10");
+  isSinglePhoton120Trigger->addValue("HLT_Photon120_R9Id90_HE10_IsoM_v11");
+  handler->addObjectVariable("isSinglePhoton120Trigger",isSinglePhoton120Trigger);
+
+  ObjectVariableValueInList<TString>* isSinglePhoton165Trigger = new ObjectVariableValueInList<TString>("TRIGGERNAME","HLT_Photon165_R9Id90_HE10_IsoM_v1");
+  isSinglePhoton165Trigger->addValue("HLT_Photon165_R9Id90_HE10_IsoM_v2");
+  isSinglePhoton165Trigger->addValue("HLT_Photon165_R9Id90_HE10_IsoM_v3");
+  isSinglePhoton165Trigger->addValue("HLT_Photon165_R9Id90_HE10_IsoM_v4");
+  isSinglePhoton165Trigger->addValue("HLT_Photon165_R9Id90_HE10_IsoM_v5");
+  isSinglePhoton165Trigger->addValue("HLT_Photon165_R9Id90_HE10_IsoM_v6");
+  isSinglePhoton165Trigger->addValue("HLT_Photon165_R9Id90_HE10_IsoM_v7");
+  isSinglePhoton165Trigger->addValue("HLT_Photon165_R9Id90_HE10_IsoM_v8");
+  isSinglePhoton165Trigger->addValue("HLT_Photon165_R9Id90_HE10_IsoM_v9");
+  isSinglePhoton165Trigger->addValue("HLT_Photon165_R9Id90_HE10_IsoM_v10");
+  isSinglePhoton165Trigger->addValue("HLT_Photon165_R9Id90_HE10_IsoM_v11");
+  isSinglePhoton165Trigger->addValue("HLT_Photon165_R9Id90_HE10_IsoM_v12");
+  handler->addObjectVariable("isSinglePhoton165Trigger",isSinglePhoton165Trigger);
+
   //handler->addObjectVariable("Accepted", new ObjectVariableValue<bool>("ACCEPT", true));
   //handler->addObjectVariable("WasRun", new ObjectVariableValue<bool>("wasrun", true));
 
   handler->addProduct("goodtriggers", "TRIGGERS");
   handler->addProductCut("goodtriggers", "ACCEPT");
   handler->addProductCut("goodtriggers", "WASRUN");
+
+  handler->addProduct("singlePhoton165Trigger","goodtriggers");
+  handler->addProductCut("singlePhoton165Trigger","isSinglePhoton165Trigger");
+  handler->addEventVariable("NSinglePhoton165Triggers", new EventVariableN("NSinglePhoton165Triggers","singlePhoton165Triggers"));
+  handler->addEventVariable("hasSinglePhoton165Triggers",new EventVariableInRange<int>("NSinglePhoton165Triggers",1,10000));
+
+  handler->addProduct("singlePhoton120Trigger","goodtriggers");
+  handler->addProductCut("singlePhoton120Trigger","isSinglePhoton120Trigger");
+  handler->addEventVariable("NSinglePhoton120Triggers", new EventVariableN("NSinglePhoton120Triggers","singlePhoton120Triggers"));
+  handler->addEventVariable("hasSinglePhoton120Triggers",new EventVariableInRange<int>("NSinglePhoton120Triggers",1,10000));
+
+  handler->addProduct("singlePhoton90Trigger","goodtriggers");
+  handler->addProductCut("singlePhoton90Trigger","isSinglePhoton90Trigger");
+  handler->addEventVariable("NSinglePhoton90Triggers", new EventVariableN("NSinglePhoton90Triggers","singlePhoton90Triggers"));
+  handler->addEventVariable("hasSinglePhoton90Triggers",new EventVariableInRange<int>("NSinglePhoton90Triggers",1,10000));
+
+  handler->addProduct("singlePhoton75Trigger","goodtriggers");
+  handler->addProductCut("singlePhoton75Trigger","isSinglePhoton75Trigger");
+  handler->addEventVariable("NSinglePhoton75Triggers", new EventVariableN("NSinglePhoton75Triggers","singlePhoton75Triggers"));
+  handler->addEventVariable("hasSinglePhoton75Triggers",new EventVariableInRange<int>("NSinglePhoton75Triggers",1,10000));
+
+  handler->addProduct("singlePhoton50Trigger","goodtriggers");
+  handler->addProductCut("singlePhoton50Trigger","isSinglePhoton50Trigger");
+  handler->addEventVariable("NSinglePhoton50Triggers", new EventVariableN("NSinglePhoton50Triggers","singlePhoton50Triggers"));
+  handler->addEventVariable("hasSinglePhoton50Triggers",new EventVariableInRange<int>("NSinglePhoton50Triggers",1,10000));
+
+  handler->addProduct("singlePhoton36Trigger","goodtriggers");
+  handler->addProductCut("singlePhoton36Trigger","isSinglePhoton36Trigger");
+  handler->addEventVariable("NSinglePhoton36Triggers", new EventVariableN("NSinglePhoton36Triggers","singlePhoton36Triggers"));
+  handler->addEventVariable("hasSinglePhoton36Triggers",new EventVariableInRange<int>("NSinglePhoton36Triggers",1,10000));
+
+  handler->addProduct("singlePhoton30Trigger","goodtriggers");
+  handler->addProductCut("singlePhoton30Trigger","isSinglePhoton30Trigger");
+  handler->addEventVariable("NSinglePhoton30Triggers", new EventVariableN("NSinglePhoton30Triggers","singlePhoton30Triggers"));
+  handler->addEventVariable("hasSinglePhoton30Triggers",new EventVariableInRange<int>("NSinglePhoton30Triggers",1,10000));
+
+  handler->addProduct("singlePhoton22Trigger","goodtriggers");
+  handler->addProductCut("singlePhoton22Trigger","isSinglePhoton22Trigger");
+  handler->addEventVariable("NSinglePhoton22Triggers", new EventVariableN("NSinglePhoton22Triggers","singlePhoton22Triggers"));
+  handler->addEventVariable("hasSinglePhoton22Triggers",new EventVariableInRange<int>("NSinglePhoton22Triggers",1,10000));
 
   handler->addProduct("singleMuTriggers","goodtriggers");
   handler->addProductCut("singleMuTriggers","isSingleMuTrigger");
