@@ -651,6 +651,18 @@ void setupMCProducts(AdvancedHandler* handler)
   motherBoson->addValue(25);
   handler->addObjectVariable("MOTHERBOSON",motherBoson);
 
+  ObjectVariableValueInList<int>* heavyPDGID = new ObjectVariableValueInList<int>("pdgId",5);
+  heavyPDGID->addValue(-5);
+  heavyPDGID->addValue(4);
+  heavyPDGID->addValue(-4);
+  handler->addObjectVariable("HEAVYPDGID",heavyPDGID);
+
+  ObjectVariableValueInList<int>* heavySTATUS23 = new ObjectVariableValueInList<int>("status",23);
+  handler->addObjectVariable("HEAVYSTATUS23",heavySTATUS23);
+
+  ObjectVariableValueInList<int>* heavySTATUS51 = new ObjectVariableValueInList<int>("status",51);
+  handler->addObjectVariable("HEAVYSTATUS51",heavySTATUS51);
+
   ObjectVariableValueInList<int>* quarkPDGID = new ObjectVariableValueInList<int>("pdgId",1);
   quarkPDGID->addValue(-1);
   quarkPDGID->addValue(2);
@@ -729,6 +741,17 @@ void setupMCProducts(AdvancedHandler* handler)
   handler->addProduct("MCTAUS","ALLMC");
   handler->addProductCut("MCTAUS","TAUPDGID");
 
+  handler->addProduct("MCHEAVY","ALLMC");
+  handler->addProductCut("MCHEAVY","HEAVYPDGID");
+
+  handler->addProduct("MCHEAVY23","ALLMC");
+  handler->addProductCut("MCHEAVY23","HEAVYPDGID");
+  handler->addProductCut("MCHEAVY23","HEAVYSTATUS23");
+
+  handler->addProduct("MCHEAVY51","ALLMC");
+  handler->addProductCut("MCHEAVY51","HEAVYPDGID");
+  handler->addProductCut("MCHEAVY51","HEAVYSTATUS51");
+
   handler->addProduct("MCELECTRONSFROMZ","MCELECTRONS");
   handler->addProductCut("MCELECTRONSFROMZ","MOTHERZ");
   handler->addProduct("MCMUONSFROMZ","MCMUONS");
@@ -761,6 +784,15 @@ void setupMCProducts(AdvancedHandler* handler)
   handler->addEventVariable("SIGNALQUARKS_PT",new EventVariableObjectVariableVector<double>("PT","SIGNALQUARKS"));
   handler->addEventVariable("SIGNALQUARKS_P",new EventVariableObjectVariableVector<double>("P","SIGNALQUARKS"));
   handler->addEventVariable("SCALAR_PT",new EventVariableObjectVariableVector<double>("PT","SCALARS"));
+
+  handler->addEventVariable("HEAVY_PT",new EventVariableObjectVariableVector<double>("PT","MCHEAVY"));
+  handler->addEventVariable("HEAVY_PDGID",new EventVariableObjectVariableVector<int>("pdgId","MCHEAVY"));
+  handler->addEventVariable("HEAVY_STATUS",new EventVariableObjectVariableVector<int>("status","MCHEAVY"));
+  handler->addEventVariable("HEAVY_MOTHER",new EventVariableObjectVariableVector<int>("motherpdgId","MCHEAVY"));
+  
+  handler->addEventVariable("NHEAVY23", new EventVariableN("NHEAVY23","MCHEAVY23"));
+  handler->addEventVariable("NHEAVY51", new EventVariableN("NHEAVY51","MCHEAVY51"));
+
 }
 
 void setupVertices(AdvancedHandler* handler)
@@ -802,13 +834,27 @@ void setupKShorts(AdvancedHandler* handler)
   handler->addProductCut("goodKSHORTS","KSHORT_IP3DSIGLT3");
 }
 
+void setupPATJets(AdvancedHandler* handler)
+{
+  
+  handler->addObjectVariable("PATJET", new ObjectVariableValue<TString>("INPUTTYPE","jet"));
+
+  handler->addProduct("ALLPATJETS","ALLJETS");
+  handler->addProductCut("ALLPATJETS","PATJET");
+
+  //handler->addObjectVariable("ALLPATJETS_isPFJet",new ObjectVariableValue<bool>("isPFJet",true));
+
+  //pt, em and h fractions,
+
+}
+
 void setupJets(AdvancedHandler* handler)
 {
   handler->addObjectVariable("JET_NEUTRALHADRONFRACTION", new ObjectVariableInRange<double>("neutralHadronEnergyFraction",0,0.99));
   handler->addObjectVariable("JET_NEUTRALEMFRACTION", new ObjectVariableInRange<double>("neutralEmEnergyFraction", 0,0.99));
   handler->addObjectVariable("JET_NUMBEROFCONSTITUENTS", new ObjectVariableInRange<int>("chargedMultiplicity",1,100000));
-  handler->addObjectVariable("CSVM",new ObjectVariableInRange<double>("combinedSecondaryVertexBJetTags",0.679,1000.0));
-  handler->addObjectVariable("CSVL",new ObjectVariableInRange<double>("combinedSecondaryVertexBJetTags",0.244,1000.0));
+  handler->addObjectVariable("CSVM",new ObjectVariableInRange<double>("pfCombinedSecondaryVertexBJetTags",0.679,1000.0));
+  handler->addObjectVariable("CSVL",new ObjectVariableInRange<double>("pfCombinedSecondaryVertexBJetTags",0.244,1000.0));
   handler->addObjectVariable("CALOJET", new ObjectVariableValue<TString>("INPUTTYPE","calojet"));
   handler->addObjectVariable("NOTCALOJET", new ObjectVariableReversed("CALOJET"));
 
@@ -1146,7 +1192,8 @@ void setupProducts(AdvancedHandler* handler, bool isSignal)
   //Setup Jets//
   //////////////
   setupJets(handler);
-
+  setupPATJets(handler);
+  
   setupCaloJetMatching(handler,isSignal);
 
   ////////////////
@@ -1192,6 +1239,24 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
   photonVariables.push_back("PT");
   photonVariables.push_back("ETA");
   photonVariables.push_back("PHI");
+
+  vector<TString> PATJetVariables;
+  PATJetVariables.push_back("PT");
+  PATJetVariables.push_back("ETA");
+  PATJetVariables.push_back("PHI");
+  PATJetVariables.push_back("pfCombinedSecondaryVertexBJetTags");
+  PATJetVariables.push_back("simpleSecondaryVertexHighEffBJetTags");
+  PATJetVariables.push_back("chargedHadronEnergyFraction");
+  PATJetVariables.push_back("chargedEmEnergyFraction");
+  PATJetVariables.push_back("pfSimpleSecondaryVertexHighEffBJetTags");//new
+  PATJetVariables.push_back("pfCombinedSecondaryVertexV2BJetTags");//new
+  PATJetVariables.push_back("pfCombinedInclusiveSecondaryVertexV2BJetTags");//new
+  PATJetVariables.push_back("pfCombinedMVAV2BJetTags");//new
+
+  vector<TString> PATJetVariablesInt;
+  PATJetVariablesInt.push_back("partonFlavour");
+  //PATJetVariablesInt.push_back("isPFJet");
+  PATJetVariablesInt.push_back("chargedMultiplicity");
 
   vector<TString> variables;
   variables.push_back("PT");
@@ -1273,6 +1338,9 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
   photonStarterProducts.push_back("PHOTONSPT10");
   photonStarterProducts.push_back("MEDIUMPHOTONS");
 
+  vector<TString> PATJetStarterProducts;
+  PATJetStarterProducts.push_back("ALLPATJETS"); 
+
   //starterProducts.push_back("ALLPHOTONS"); 
   //starterProducts.push_back("PHOTONSPT10");
   //starterProducts.push_back("MEDIUMPHOTONS");
@@ -1304,7 +1372,7 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
 
   for(auto &product : starterProducts) {
     productlist.push_back(product);
-    if(product!="ALLDIJETS" && product!="ALLPHOTONS" && product!="PHOTONSPT10" && product!="MEDIUMPHOTONS")productlist.push_back(product+"MATCHED");
+    if(product!="ALLDIJETS" && product!="ALLPATJETS" && product!="ALLPHOTONS" && product!="PHOTONSPT10" && product!="MEDIUMPHOTONS")productlist.push_back(product+"MATCHED");
   }
 
   variables.push_back("sumIP");
@@ -1370,6 +1438,8 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
   variables.push_back("avfAssocThrustMinor");
   variables.push_back("AVGMISSINGINNER");
   variables.push_back("AVGMISSINGOUTER");
+  variables.push_back("pfCombinedSecondaryVertexBJetTags");
+  variables.push_back("partonFlavour");
 
   variablesInt.push_back("nMatchedTracks");
   variablesInt.push_back("nCleanMatchedTracks");  
@@ -1432,6 +1502,29 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
       TString hname = TString::Format("%s_%s",variable.Data(),product.Data());
       hname.ToUpper();
       handler->addEventVariable(hname, new EventVariableObjectVariableVector<double>(variable,product));
+    }
+
+    TString selfDeltaR_str = "SELFDELTAR"; selfDeltaR_str+=product;
+    TString hname = TString::Format("SELFDELTAR_%s",product.Data()); hname.ToUpper();
+    handler->addEventVariable(hname, new EventVariableObjectVariableVector<double>(selfDeltaR_str,product));
+    
+  }
+
+  //PAT Jets
+  for(auto product : PATJetStarterProducts){
+    TString nname = TString::Format("N%s",product.Data());
+    nname.ToUpper();
+    handler->addEventVariable(nname, new EventVariableN(nname,product));
+
+    for(auto variable : PATJetVariables){
+      TString hname = TString::Format("%s_%s",variable.Data(),product.Data());
+      hname.ToUpper();
+      handler->addEventVariable(hname, new EventVariableObjectVariableVector<double>(variable,product));
+    }
+    for(auto variable : PATJetVariablesInt){
+      TString hname = TString::Format("%s_%s",variable.Data(),product.Data());
+      hname.ToUpper();
+      handler->addEventVariable(hname, new EventVariableObjectVariableVector<int>(variable,product));
     }
 
     TString selfDeltaR_str = "SELFDELTAR"; selfDeltaR_str+=product;

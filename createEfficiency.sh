@@ -39,7 +39,7 @@ echo 'xrdcp -f $2 root://cmseos.fnal.gov/$5/$2' >> $runScript
 echo 'rm $2' >> $runScript
 echo "" >> $runScript
 
-processlist=processes.list
+processlist=processes_backgroundMC_SmallGammaTest.list 
 
 while read process
 do
