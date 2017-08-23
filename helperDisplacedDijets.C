@@ -298,12 +298,15 @@ void setupGenericObjectVariables(AdvancedHandler* handler)
   handler->addObjectVariable("ETA2p4",new ObjectVariableInRange<double>("ETA",-2.4,2.4));
   handler->addObjectVariable("ETA2p5",new ObjectVariableInRange<double>("ETA",-2.5,2.5,"ETA2p5"));
   handler->addObjectVariable("ETA3",new ObjectVariableInRange<double>("ETA",-3,3,"ETA3"));
+  handler->addObjectVariable("ETA5",new ObjectVariableInRange<double>("ETA",-5,5,"ETA5"));
   handler->addObjectVariable("BARREL",new ObjectVariableInRange<double>("ETA",-1.5,1.5,"barrelEta"));
   handler->addObjectVariable("ENDCAP",new ObjectVariableReversed("BARREL","endcapEta"));
   handler->addObjectVariable("POSITIVE",new ObjectVariableInRange<int>("charge",0,10,"CHARGEPOS"));
   handler->addObjectVariable("NEGATIVE",new ObjectVariableInRange<int>("charge",-10,0,"CHARGENEG"));
   handler->addObjectVariable("PT6",new ObjectVariableInRange<double>("PT",6.0,10000.0,"PT6"));
   handler->addObjectVariable("PT7",new ObjectVariableInRange<double>("PT",7.0,10000.0,"PT7"));
+  handler->addObjectVariable("PT10",new ObjectVariableInRange<double>("PT",10.0,10000.0,"PT10"));
+  handler->addObjectVariable("PT15",new ObjectVariableInRange<double>("PT",15.0,10000.0,"PT15"));
   handler->addObjectVariable("PT20",new ObjectVariableInRange<double>("PT",20.0,10000.0,"PT20"));
   handler->addObjectVariable("PT26",new ObjectVariableInRange<double>("PT",26.0,10000.0,"PT26"));
   handler->addObjectVariable("PT30",new ObjectVariableInRange<double>("PT",30.0,10000.0,"PT30"));
@@ -748,6 +751,11 @@ void setupMCProducts(AdvancedHandler* handler)
   handler->addProductCut("MCHEAVY23","HEAVYPDGID");
   handler->addProductCut("MCHEAVY23","HEAVYSTATUS23");
 
+  handler->addProduct("MCHEAVY","ALLMC");
+  handler->addProductCut("MCHEAVY","HEAVYPDGID");
+  handler->addProductCut("MCHEAVY","PT20");
+  handler->addProductCut("MCHEAVY","ETA5");
+
   handler->addProduct("MCHEAVY51","ALLMC");
   handler->addProductCut("MCHEAVY51","HEAVYPDGID");
   handler->addProductCut("MCHEAVY51","HEAVYSTATUS51");
@@ -781,15 +789,16 @@ void setupMCProducts(AdvancedHandler* handler)
   handler->addObjectVariable("VtxZ",new ObjectVariableRename<double>("vz"));
 
   handler->addEventVariable("SIGNALQUARKS_GENDXY",new EventVariableObjectVariableVector<double>("genDxy","SIGNALQUARKS"));
-  handler->addEventVariable("SIGNALQUARKS_PT",new EventVariableObjectVariableVector<double>("PT","SIGNALQUARKS"));
+  handler->addEventVariable("SIGNALQUARKS_P",new EventVariableObjectVariableVector<double>("PT","SIGNALQUARKS"));
   handler->addEventVariable("SIGNALQUARKS_P",new EventVariableObjectVariableVector<double>("P","SIGNALQUARKS"));
   handler->addEventVariable("SCALAR_PT",new EventVariableObjectVariableVector<double>("PT","SCALARS"));
 
-  handler->addEventVariable("HEAVY_PT",new EventVariableObjectVariableVector<double>("PT","MCHEAVY"));
-  handler->addEventVariable("HEAVY_PDGID",new EventVariableObjectVariableVector<int>("pdgId","MCHEAVY"));
-  handler->addEventVariable("HEAVY_STATUS",new EventVariableObjectVariableVector<int>("status","MCHEAVY"));
-  handler->addEventVariable("HEAVY_MOTHER",new EventVariableObjectVariableVector<int>("motherpdgId","MCHEAVY"));
+  //handler->addEventVariable("HEAVY_PT",new EventVariableObjectVariableVector<double>("PT","MCHEAVY"));
+  //handler->addEventVariable("HEAVY_PDGID",new EventVariableObjectVariableVector<int>("pdgId","MCHEAVY"));
+  //handler->addEventVariable("HEAVY_STATUS",new EventVariableObjectVariableVector<int>("status","MCHEAVY"));
+  //handler->addEventVariable("HEAVY_MOTHER",new EventVariableObjectVariableVector<int>("motherpdgId","MCHEAVY"));
   
+  handler->addEventVariable("NHEAVY", new EventVariableN("NHEAVY","MCHEAVY"));
   handler->addEventVariable("NHEAVY23", new EventVariableN("NHEAVY23","MCHEAVY23"));
   handler->addEventVariable("NHEAVY51", new EventVariableN("NHEAVY51","MCHEAVY51"));
 
@@ -836,15 +845,32 @@ void setupKShorts(AdvancedHandler* handler)
 
 void setupPATJets(AdvancedHandler* handler)
 {
-  
   handler->addObjectVariable("PATJET", new ObjectVariableValue<TString>("INPUTTYPE","jet"));
-
+  
+  handler->addObjectVariable("neutralHadronEnergyFraction0p99", new ObjectVariableInRange<double>("neutralHadronEnergyFraction",0,0.99));
+  handler->addObjectVariable("neutralEmEnergyFraction0p99", new ObjectVariableInRange<double>("neutralEmEnergyFraction",0,0.99));
+  handler->addObjectVariable("chargedHadronEnergyFraction_BAD", new ObjectVariableInRange<double>("chargedHadronEnergyFraction",-1000,0));
+  handler->addObjectVariable("chargedHadronEnergyFraction0", new ObjectVariableReversed("chargedHadronEnergyFraction_BAD"));
+  handler->addObjectVariable("chargedEmEnergyFraction0p99", new ObjectVariableInRange<double>("chargedEmEnergyFraction",0,0.99));
+  handler->addObjectVariable("chargedMultiplicity0", new ObjectVariableInRange<int>("chargedMultiplicity",1,1000));
+  
   handler->addProduct("ALLPATJETS","ALLJETS");
   handler->addProductCut("ALLPATJETS","PATJET");
 
+  handler->addProduct("BASICPATJETSPT15","ALLPATJETS");
+  handler->addProductCut("BASICPATJETSPT15","PT15"); //TEMP
+  handler->addProductCut("BASICPATJETSPT15","ETA2p4");
+  handler->addProductCut("BASICPATJETSPT15","neutralHadronEnergyFraction0p99");
+  handler->addProductCut("BASICPATJETSPT15","neutralEmEnergyFraction0p99");
+  handler->addProductCut("BASICPATJETSPT15","chargedHadronEnergyFraction0");
+  handler->addProductCut("BASICPATJETSPT15","chargedMultiplicity0");
+  handler->addProductCut("BASICPATJETSPT15","chargedEmEnergyFraction0p99");
+ 
+
   //handler->addObjectVariable("ALLPATJETS_isPFJet",new ObjectVariableValue<bool>("isPFJet",true));
 
-  //pt, em and h fractions,
+  //pt, em and h fractions,etc
+  //lepton cleaning??  already cleaning in calo jets
 
 }
 
@@ -1244,10 +1270,10 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
   PATJetVariables.push_back("PT");
   PATJetVariables.push_back("ETA");
   PATJetVariables.push_back("PHI");
-  PATJetVariables.push_back("pfCombinedSecondaryVertexBJetTags");
-  PATJetVariables.push_back("simpleSecondaryVertexHighEffBJetTags");
-  PATJetVariables.push_back("chargedHadronEnergyFraction");
-  PATJetVariables.push_back("chargedEmEnergyFraction");
+  //PATJetVariables.push_back("chargedHadronEnergyFraction");
+  //PATJetVariables.push_back("chargedEmEnergyFraction");
+  //PATJetVariables.push_back("neutralHadronEnergyFraction");
+  //PATJetVariables.push_back("neutralEmEnergyFraction");
   PATJetVariables.push_back("pfSimpleSecondaryVertexHighEffBJetTags");//new
   PATJetVariables.push_back("pfCombinedSecondaryVertexV2BJetTags");//new
   PATJetVariables.push_back("pfCombinedInclusiveSecondaryVertexV2BJetTags");//new
@@ -1340,6 +1366,7 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
 
   vector<TString> PATJetStarterProducts;
   PATJetStarterProducts.push_back("ALLPATJETS"); 
+  PATJetStarterProducts.push_back("BASICPATJETSPT15"); 
 
   //starterProducts.push_back("ALLPHOTONS"); 
   //starterProducts.push_back("PHOTONSPT10");
@@ -1372,7 +1399,7 @@ void setupListVariablesAndHistograms(AdvancedHandler* handler)
 
   for(auto &product : starterProducts) {
     productlist.push_back(product);
-    if(product!="ALLDIJETS" && product!="ALLPATJETS" && product!="ALLPHOTONS" && product!="PHOTONSPT10" && product!="MEDIUMPHOTONS")productlist.push_back(product+"MATCHED");
+    if(product!="ALLDIJETS" && product!="ALLPHOTONS" && product!="PHOTONSPT10" && product!="MEDIUMPHOTONS")productlist.push_back(product+"MATCHED");
   }
 
   variables.push_back("sumIP");
